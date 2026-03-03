@@ -1,6 +1,6 @@
 package it.unibo.pps.e1;
 
-class CoreBankAccount {
+class CoreBankAccount implements BankAccount {
 
     private int balance = 0;
 
