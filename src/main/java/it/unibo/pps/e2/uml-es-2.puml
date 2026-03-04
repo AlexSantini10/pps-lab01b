@@ -1,0 +1,70 @@
+@startuml
+skinparam style strictuml
+skinparam classAttributeIconSize 0
+
+package "it.unibo.pps.e2" {
+
+    interface Logics {
+        + hit(row:int, col:int) : boolean
+        + hasKnight(row:int, col:int) : boolean
+        + hasPawn(row:int, col:int) : boolean
+    }
+
+    class LogicsImpl {
+        - pawn : Pair<Integer,Integer>
+        - knight : Pair<Integer,Integer>
+        - board : Board
+        - moveRule : MoveRule
+        + LogicsImpl(size:int)
+        + LogicsImpl(board:Board, moveRule:MoveRule, pawn:Pair<Integer,Integer>, knight:Pair<Integer,Integer>)
+        + hit(row:int, col:int) : boolean
+        + hasKnight(row:int, col:int) : boolean
+        + hasPawn(row:int, col:int) : boolean
+    }
+
+    interface MoveRule {
+        + isValid(from:Pair<Integer,Integer>, to:Pair<Integer,Integer>) : boolean
+    }
+
+    class StandardKnightMoveRule {
+        + isValid(from:Pair<Integer,Integer>, to:Pair<Integer,Integer>) : boolean
+    }
+
+    interface PlacementStrategy {
+        + pawnPosition(size:int) : Pair<Integer,Integer>
+        + knightPosition(size:int, pawn:Pair<Integer,Integer>) : Pair<Integer,Integer>
+    }
+
+    class RandomPlacementStrategy {
+        - random : Random
+        + RandomPlacementStrategy(random:Random)
+        + pawnPosition(size:int) : Pair<Integer,Integer>
+        + knightPosition(size:int, pawn:Pair<Integer,Integer>) : Pair<Integer,Integer>
+    }
+
+    interface Board {
+        + size() : int
+        + isInside(row:int, col:int) : boolean
+        + ensureInside(row:int, col:int) : void
+    }
+
+    class StandardBoard {
+        - size : int
+        + StandardBoard(size:int)
+        + size() : int
+        + isInside(row:int, col:int) : boolean
+        + ensureInside(row:int, col:int) : void
+    }
+
+    Logics <|.. LogicsImpl
+
+    MoveRule <|.. StandardKnightMoveRule
+    PlacementStrategy <|.. RandomPlacementStrategy
+    Board <|.. StandardBoard
+
+    LogicsImpl *-- Board
+    LogicsImpl *-- MoveRule
+    LogicsImpl ..> PlacementStrategy : uses in ctor(size)
+}
+
+@enduml

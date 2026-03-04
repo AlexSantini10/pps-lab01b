@@ -1,56 +1,65 @@
 package it.unibo.pps.e2;
 
-import java.util.*;
+import java.util.Objects;
+import java.util.Random;
 
 public class LogicsImpl implements Logics {
-	
-	private final Pair<Integer,Integer> pawn;
-	private Pair<Integer,Integer> knight;
-	private final Random random = new Random();
-	private final int size;
-	 
-    public LogicsImpl(int size){
-    	this.size = size;
-        this.pawn = this.randomEmptyPosition();
-        this.knight = this.randomEmptyPosition();	
+
+    private final Pair<Integer, Integer> pawn;
+    private Pair<Integer, Integer> knight;
+
+    private final Board board;
+    private final MoveRule moveRule;
+
+    public LogicsImpl(final int size) {
+        final Board b = new StandardBoard(size);
+        final MoveRule r = new StandardKnightMoveRule();
+        final PlacementStrategy ps = new RandomPlacementStrategy(new Random());
+
+        final Pair<Integer,Integer> p = ps.pawnPosition(size);
+        Pair<Integer,Integer> k = ps.knightPosition(size, p);
+        while (p.equals(k)) {
+            k = ps.knightPosition(size, p);
+        }
+
+        this.board = b;
+        this.moveRule = r;
+        this.pawn = p;
+        this.knight = k;
     }
 
-    public LogicsImpl(final int size,
-                      final Pair<Integer,Integer> pawn,
-                      final Pair<Integer,Integer> knight) {
-        this.size = size;
-        this.pawn = pawn;
-        this.knight = knight;
-    }
-    
-	private final Pair<Integer,Integer> randomEmptyPosition(){
-    	Pair<Integer,Integer> pos = new Pair<>(this.random.nextInt(size),this.random.nextInt(size));
-    	// the recursive call below prevents clash with an existing pawn
-    	return this.pawn!=null && this.pawn.equals(pos) ? randomEmptyPosition() : pos;
-    }
-    
-	@Override
-	public boolean hit(int row, int col) {
-		if (row<0 || col<0 || row >= this.size || col >= this.size) {
-			throw new IndexOutOfBoundsException();
-		}
-		// Below a compact way to express allowed moves for the knight
-		int x = row-this.knight.getX();
-		int y = col-this.knight.getY();
-		if (x!=0 && y!=0 && Math.abs(x)+Math.abs(y)==3) {
-			this.knight = new Pair<>(row,col);
-			return this.pawn.equals(this.knight);
-		}
-		return false;
-	}
+    public LogicsImpl(final Board board, final MoveRule moveRule, final Pair<Integer, Integer> pawn, final Pair<Integer, Integer> knight) {
+        this.board = Objects.requireNonNull(board);
+        this.moveRule = Objects.requireNonNull(moveRule);
+        this.pawn = Objects.requireNonNull(pawn);
+        this.knight = Objects.requireNonNull(knight);
 
-	@Override
-	public boolean hasKnight(int row, int col) {
-		return this.knight.equals(new Pair<>(row,col));
-	}
+        this.board.ensureInside(this.pawn.getX(), this.pawn.getY());
+        this.board.ensureInside(this.knight.getX(), this.knight.getY());
 
-	@Override
-	public boolean hasPawn(int row, int col) {
-		return this.pawn.equals(new Pair<>(row,col));
-	}
+        if (this.pawn.equals(this.knight)) {
+            throw new IllegalArgumentException("pawn and knight cannot overlap");
+        }
+    }
+
+    @Override
+    public boolean hit(final int row, final int col) {
+        this.board.ensureInside(row, col);
+        final Pair<Integer, Integer> target = new Pair<>(row, col);
+        if (!this.moveRule.isValid(this.knight, target)) {
+            return false;
+        }
+        this.knight = target;
+        return this.pawn.equals(this.knight);
+    }
+
+    @Override
+    public boolean hasKnight(final int row, final int col) {
+        return this.knight.equals(new Pair<>(row, col));
+    }
+
+    @Override
+    public boolean hasPawn(final int row, final int col) {
+        return this.pawn.equals(new Pair<>(row, col));
+    }
 }
