@@ -14,6 +14,14 @@ public class LogicsImpl implements Logics {
         this.pawn = this.randomEmptyPosition();
         this.knight = this.randomEmptyPosition();	
     }
+
+    public LogicsImpl(final int size,
+                      final Pair<Integer,Integer> pawn,
+                      final Pair<Integer,Integer> knight) {
+        this.size = size;
+        this.pawn = pawn;
+        this.knight = knight;
+    }
     
 	private final Pair<Integer,Integer> randomEmptyPosition(){
     	Pair<Integer,Integer> pos = new Pair<>(this.random.nextInt(size),this.random.nextInt(size));
