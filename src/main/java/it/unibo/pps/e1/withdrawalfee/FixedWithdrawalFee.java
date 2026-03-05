@@ -1,4 +1,4 @@
-package it.unibo.pps.e1;
+package it.unibo.pps.e1.withdrawalfee;
 
 public class FixedWithdrawalFee implements WithdrawalFee{
 

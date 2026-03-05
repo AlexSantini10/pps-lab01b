@@ -1,14 +1,17 @@
-package it.unibo.pps.e1;
+package it.unibo.pps.e1.bankaccounts;
+
+import it.unibo.pps.e1.withdrawalfee.WithdrawalFee;
+import it.unibo.pps.e1.withdrawalpolicy.WithdrawalPolicy;
 
 import java.util.Objects;
 
-public class SilverBankAccount implements BankAccount {
+public class ConfigurableBankAccount implements BankAccount {
 
     private final BankAccount base;
     private final WithdrawalFee withdrawalFee;
     private final WithdrawalPolicy withdrawalPolicy;
 
-    public SilverBankAccount(final BankAccount base, final WithdrawalFee withdrawalFee, final WithdrawalPolicy withdrawalPolicy) {
+    public ConfigurableBankAccount(final BankAccount base, final WithdrawalFee withdrawalFee, final WithdrawalPolicy withdrawalPolicy) {
         this.base = Objects.requireNonNull(base);
         this.withdrawalFee = Objects.requireNonNull(withdrawalFee);
         this.withdrawalPolicy = Objects.requireNonNull(withdrawalPolicy);
@@ -24,20 +27,13 @@ public class SilverBankAccount implements BankAccount {
         if (amount < 0) {
             throw new IllegalArgumentException("Deposit amount must be non-negative");
         }
+
         this.base.deposit(amount);
     }
 
     @Override
     public void withdraw(final int amount) {
-        if (amount < 0) {
-            throw new IllegalArgumentException("Withdrawal amount must be non-negative");
-        }
-
         final int fee = this.withdrawalFee.getFee(amount);
-        if (fee < 0) {
-            throw new IllegalStateException("Withdrawal fee must be non-negative");
-        }
-
         final int totalDebit = amount + fee;
         final int currentBalance = this.base.getBalance();
 
