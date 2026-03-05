@@ -6,7 +6,7 @@ public class SilverBankAccount implements BankAccount {
     private final WithdrawalFee feePolicy;
     private final WithdrawalPolicy withdrawalPolicy;
 
-    SilverBankAccount(
+    public SilverBankAccount(
             final BankAccount base,
             final WithdrawalFee feePolicy,
             final WithdrawalPolicy withdrawalPolicy
