@@ -1,4 +1,4 @@
-package it.unibo.pps.e1.withdrawalpolicy;
+package it.unibo.pps.e1.withdrawalpolicies;
 
 public interface WithdrawalPolicy {
 

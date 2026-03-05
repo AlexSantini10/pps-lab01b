@@ -1,7 +1,7 @@
 package it.unibo.pps.e1.bankaccounts;
 
-import it.unibo.pps.e1.withdrawalfee.FixedWithdrawalFee;
-import it.unibo.pps.e1.withdrawalpolicy.StandardWithdrawalPolicy;
+import it.unibo.pps.e1.withdrawalfees.FixedWithdrawalFee;
+import it.unibo.pps.e1.withdrawalpolicies.StandardWithdrawalPolicy;
 
 public final class SilverBankAccount extends ConfigurableBankAccount {
 

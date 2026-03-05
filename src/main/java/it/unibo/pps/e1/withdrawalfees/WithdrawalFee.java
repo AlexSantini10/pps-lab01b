@@ -1,4 +1,4 @@
-package it.unibo.pps.e1.withdrawalfee;
+package it.unibo.pps.e1.withdrawalfees;
 
 public interface WithdrawalFee {
 

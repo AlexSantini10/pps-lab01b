@@ -1,10 +1,10 @@
 package it.unibo.pps.e1;
 
 import it.unibo.pps.e1.bankaccounts.*;
-import it.unibo.pps.e1.withdrawalfee.FixedWithdrawalFee;
-import it.unibo.pps.e1.withdrawalfee.ThresholdWithdrawalFee;
-import it.unibo.pps.e1.withdrawalpolicy.OverdraftWithdrawalPolicy;
-import it.unibo.pps.e1.withdrawalpolicy.StandardWithdrawalPolicy;
+import it.unibo.pps.e1.withdrawalfees.FixedWithdrawalFee;
+import it.unibo.pps.e1.withdrawalfees.ThresholdWithdrawalFee;
+import it.unibo.pps.e1.withdrawalpolicies.OverdraftWithdrawalPolicy;
+import it.unibo.pps.e1.withdrawalpolicies.StandardWithdrawalPolicy;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

@@ -1,0 +1,47 @@
+@startuml
+skinparam classAttributeIconSize 0
+
+package "it.unibo.pps.e1.bankaccounts" {
+
+    interface BankAccount
+
+    class CoreBankAccount
+    class ConfigurableBankAccount
+    class SilverBankAccount
+    class GoldBankAccount
+    class BronzeBankAccount
+
+    BankAccount <|.. CoreBankAccount
+    BankAccount <|.. ConfigurableBankAccount
+
+    ConfigurableBankAccount <|-- SilverBankAccount
+    ConfigurableBankAccount <|-- GoldBankAccount
+    ConfigurableBankAccount <|-- BronzeBankAccount
+
+    ConfigurableBankAccount o-- BankAccount : base
+}
+
+package "it.unibo.pps.e1.withdrawalfee" {
+
+    interface WithdrawalFee
+    class FixedWithdrawalFee
+    class ThresholdWithdrawalFee
+
+    WithdrawalFee <|.. FixedWithdrawalFee
+    WithdrawalFee <|.. ThresholdWithdrawalFee
+}
+
+package "it.unibo.pps.e1.withdrawalpolicy" {
+
+    interface WithdrawalPolicy
+    class StandardWithdrawalPolicy
+    class OverdraftWithdrawalPolicy
+
+    WithdrawalPolicy <|.. StandardWithdrawalPolicy
+    WithdrawalPolicy <|.. OverdraftWithdrawalPolicy
+}
+
+ConfigurableBankAccount o-- WithdrawalFee : fee
+ConfigurableBankAccount o-- WithdrawalPolicy : policy
+
+@enduml

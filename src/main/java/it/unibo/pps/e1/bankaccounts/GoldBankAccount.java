@@ -1,7 +1,7 @@
 package it.unibo.pps.e1.bankaccounts;
 
-import it.unibo.pps.e1.withdrawalfee.FixedWithdrawalFee;
-import it.unibo.pps.e1.withdrawalpolicy.OverdraftWithdrawalPolicy;
+import it.unibo.pps.e1.withdrawalfees.FixedWithdrawalFee;
+import it.unibo.pps.e1.withdrawalpolicies.OverdraftWithdrawalPolicy;
 
 public final class GoldBankAccount extends ConfigurableBankAccount {
 

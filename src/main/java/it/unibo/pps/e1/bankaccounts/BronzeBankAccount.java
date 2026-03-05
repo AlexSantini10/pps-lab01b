@@ -1,7 +1,7 @@
 package it.unibo.pps.e1.bankaccounts;
 
-import it.unibo.pps.e1.withdrawalpolicy.StandardWithdrawalPolicy;
-import it.unibo.pps.e1.withdrawalfee.ThresholdWithdrawalFee;
+import it.unibo.pps.e1.withdrawalpolicies.StandardWithdrawalPolicy;
+import it.unibo.pps.e1.withdrawalfees.ThresholdWithdrawalFee;
 
 public final class BronzeBankAccount extends ConfigurableBankAccount {
 
